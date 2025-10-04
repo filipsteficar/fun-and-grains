@@ -1,5 +1,5 @@
 # Fun&Grains
-Welcome to Fun&Grains. We are a vegan blog made with ❤️ in Croatia.
+Welcome to Fun&Grains. We are a vegan food blog made with ❤️ in Croatia.
 
 ## Our Tech Stack
 - Astro
