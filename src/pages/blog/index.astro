@@ -1,0 +1,11 @@
+---
+// Layouts
+import Layout from "../../layouts/Layout.astro";
+// Components
+import PageTitle from "../../components/PageTitle.astro";
+// Data Imports
+import { siteData } from "../../global";
+---
+<Layout pageTitle=`Blog - ${siteData.name}`>
+    <PageTitle pageTitle="Blog" />
+</Layout>

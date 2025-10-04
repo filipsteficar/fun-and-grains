@@ -1,10 +1,10 @@
 // Global Site Data
 const currentYear = new Date().getFullYear();
 export const siteData = {
-    name: "Zelenije",
-    lang: "hr-HR",
-    copyright: `Zelenije - ${currentYear} | Sva Prava Pridržana`,
-    ver: "0.1.1"
+    name: "Fun&Grains",
+    lang: "en-US",
+    copyright: `Grains - ${currentYear} | All Rights Reserved`,
+    ver: "0.0.1"
 }
 // Define the MenuItem Interface
 interface MenuItem {
@@ -15,21 +15,21 @@ interface MenuItem {
 // Main Menu
 export const mainMenu: MenuItem[] = [
     {
-        label: "Početna",
+        label: "Home",
         href: "/"
     },
     {
-        label: "Arhiva",
-        href: "/arhiva"
+        label: "Blog",
+        href: "/blog"
     },
     {
-        label: "Recepti",
-        href: "/recepti"
+        label: "Recipes",
+        href: "/recipes"
     }
 ]
 // Contact Info
 export const contactInfo = {
-    email: "info@zelenije.com",
+    email: "info@funandgrains.com",
     address: "Gornja Reka 103, 10450 Jastrebarsko, Croatia"
 }
 // Social Media

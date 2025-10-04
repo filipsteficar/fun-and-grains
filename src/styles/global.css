@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 @theme {
-    --font-clashdisplay: "Clash Display", "sans-serif";
-    --font-satoshi: "Satoshi", "sans-serif";
+    --font-heading: "Clash Display", "sans-serif";
+    --font-body: "Satoshi", "sans-serif";
     --text-xs: clamp(0.64rem, 0.11vi + 0.59rem, 0.7rem);
     --text-sm: clamp(0.8rem, 0.25vi + 0.7rem, 0.94rem);
     --text-base: clamp(1rem, 0.45vi + 0.82rem, 1.25rem);
