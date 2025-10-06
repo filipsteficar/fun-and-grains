@@ -2,8 +2,8 @@
 const currentYear = new Date().getFullYear();
 export const siteData = {
     name: "Fun&Grains",
-    lang: "en-US",
-    copyright: `Grains - ${currentYear} | All Rights Reserved`,
+    lang: "en-GB",
+    copyright: `Fun&Grains - ${currentYear} | All Rights Reserved`,
     ver: "0.0.1"
 }
 // Define the MenuItem Interface

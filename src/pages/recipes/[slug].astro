@@ -1,0 +1,107 @@
+---
+// Layouts
+import Layout from "../../layouts/Layout.astro";
+// Components
+import { Image } from 'astro:assets';
+// Data Imports
+import { siteData } from "../../global";
+// Directus
+import directus from "../../lib/directus";
+import { readItems } from "@directus/sdk";
+// Directus URL
+const CMS = "https://directus-v0gswo0csw84sck0cc8c4oo0.apollo.filipsteficar.com";
+// Directus Export Posts
+export async function getStaticPaths() {
+    const posts = await directus.request(
+        readItems("recipes", {
+            fields: [
+                "id",
+                "title",
+                "slug",
+                "cover",
+                "cover_alt_text",
+                "prep_time",
+                "difficulty",
+                "portions",
+                "body",
+                "date_created",
+                "status",
+                {
+                    author: ["id", "name", "slug"]
+                }
+            ],
+            filter: {
+                status: {
+                    _eq: "published"
+                }
+            },
+            sort: ["-date_created"],
+            limit: -1,
+        })
+    );
+
+    return posts.map((singleRecipe) => ({
+        params: { slug: singleRecipe.slug },
+        props: { singleRecipe }
+    }));
+}
+
+const { singleRecipe } = Astro.props;
+
+// Prep Time Helper Function
+function formatTime(minutes: number): string {
+    if (minutes < 60) {
+        return `${minutes}m`;
+    }
+    
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    
+    if (remainingMinutes === 0) {
+        return `${hours}h`;
+    }
+    
+    return `${hours}h ${remainingMinutes.toString().padStart(2, '0')}m`;
+}
+---
+<Layout pageTitle={`${singleRecipe.title} - ${siteData.name}`}>
+    <article class="@container">
+        <!-- Post Title -->
+        <div class="mx-auto mt-4 px-4 max-w-4xl">
+            <h1 class="font-heading font-semibold text-xl">{singleRecipe.title}</h1>
+            <div class="flex flex-row justify-between gap-4">
+                <p>By {singleRecipe.author?.name || "Unknown Author"}</p>
+                <time datetime={singleRecipe.date_created}>
+                    {new Date(singleRecipe.date_created).toLocaleDateString('en-GB')}
+                </time>
+            </div>
+        </div>
+        <!-- Cover Image -->
+        <div class="mx-auto mt-4 px-4 container">
+            {singleRecipe.cover && (
+                <Image src={`${CMS}/assets/${singleRecipe.cover}?width=2400&quality=100&format=webp`} alt={singleRecipe.cover_alt_text} width="2400" height="800" class="rounded-lg object-cover aspect-[16/9]" loading="eager" />
+            )}
+        </div>
+        <!-- Recipe Meta Data -->
+        <div class="gap-4 grid grid-cols-1 lg:grid-cols-3 mx-auto mt-4 px-4 container">
+            <div class="flex flex-row justify-between gap-4 bg-zinc-100 dark:bg-zinc-900 p-4 rounded-xl">
+                <h3 class="font-heading font-semibold">Difficulty:</h3>
+                <p class="text-zinc-700 dark:text-zinc-300 capitalize">{singleRecipe.difficulty}</p>
+            </div>
+
+            <div class="flex flex-row justify-between gap-4 bg-zinc-100 dark:bg-zinc-900 p-4 rounded-xl">
+                <h3 class="font-heading font-semibold">Prep Time:</h3>
+                <p class="text-zinc-700 dark:text-zinc-300 capitalize">{formatTime(singleRecipe.prep_time)}</p>
+            </div>
+
+            <div class="flex flex-row justify-between gap-4 bg-zinc-100 dark:bg-zinc-900 p-4 rounded-xl">
+                <h3 class="font-heading font-semibold">Portions:</h3>
+                <p class="text-zinc-700 dark:text-zinc-300 capitalize">{singleRecipe.portions}</p>
+            </div>
+        </div>
+        <!-- Post Content -->
+        <div class="[&_*]:m-0 mx-auto [&_:is(h1,h2,h3,h4,h5,h6)]:mt-4 [&_p]:mt-4 [&_*]:p-0 px-4 [&_img]:rounded-lg max-w-4xl [&_:is(h1,h2,h3,h4,h5,h6)]:font-heading [&_:is(h1,h2,h3,h4,h5,h6)]:font-semibold [&_:is(h1,h2,h3,h4,h5,h6)]:text-zinc-950 [&_a]:text-zinc-950 [&_p]:text-zinc-700 dark:[&_:is(h1,h2,h3,h4,h5,h6)]:text-zinc-50 dark:[&_a]:text-zinc-50 dark:[&_p]:text-zinc-300 [&_h3]:text-lg [&_h2]:text-xl [&_h1]:text-2xl [&_a]:underline [&_a]:underline-offset-2">
+            <Fragment set:html={singleRecipe.body} />
+        </div>
+    </article>
+</Layout>

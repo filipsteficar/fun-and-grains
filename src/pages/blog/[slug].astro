@@ -1,0 +1,70 @@
+---
+// Layouts
+import Layout from "../../layouts/Layout.astro";
+// Components
+import { Image } from 'astro:assets';
+// Data Imports
+import { siteData } from "../../global";
+// Directus
+import directus from "../../lib/directus";
+import { readItems } from "@directus/sdk";
+// Directus URL
+const CMS = "https://directus-v0gswo0csw84sck0cc8c4oo0.apollo.filipsteficar.com";
+// Directus Export Posts
+export async function getStaticPaths() {
+    const posts = await directus.request(
+        readItems("posts", {
+            fields: [
+                "id",
+                "title",
+                "slug",
+                "cover",
+                "date_created",
+                "status",
+                "body",
+                {
+                    author: ["id", "name", "slug"]
+                }
+            ],
+            filter: {
+                status: {
+                    _eq: "published"
+                }
+            },
+            sort: ["-date_created"],
+            limit: -1,
+        })
+    );
+
+    return posts.map((singlePost) => ({
+        params: { slug: singlePost.slug },
+        props: { singlePost }
+    }));
+}
+
+const { singlePost } = Astro.props;
+---
+<Layout pageTitle={`${singlePost.title} - ${siteData.name}`}>
+    <article class="@container">
+        <!-- Post Title -->
+        <div class="mx-auto mt-4 px-4 max-w-4xl">
+            <h1 class="font-heading font-semibold text-xl">{singlePost.title}</h1>
+            <div class="flex flex-row justify-between gap-4">
+                <p>By {singlePost.author?.name || "Unknown Author"}</p>
+                <time datetime={singlePost.date_created}>
+                    {new Date(singlePost.date_created).toLocaleDateString('en-GB')}
+                </time>
+            </div>
+        </div>
+        <!-- Cover Image -->
+        <div class="mx-auto mt-4 px-4 container">
+            {singlePost.cover && (
+                <Image src={`${CMS}/assets/${singlePost.cover}?width=2400&quality=100&format=webp`} alt={singlePost.title} width="2400" height="800" class="rounded-lg object-cover aspect-[16/9]" loading="eager" />
+            )}
+        </div>
+        <!-- Post Content -->
+        <div class="[&_*]:m-0 mx-auto [&_:is(h1,h2,h3,h4,h5,h6)]:mt-4 [&_p]:mt-4 [&_*]:p-0 px-4 [&_img]:rounded-lg max-w-4xl [&_:is(h1,h2,h3,h4,h5,h6)]:font-heading [&_:is(h1,h2,h3,h4,h5,h6)]:font-semibold [&_:is(h1,h2,h3,h4,h5,h6)]:text-zinc-950 [&_a]:text-zinc-950 [&_p]:text-zinc-700 dark:[&_:is(h1,h2,h3,h4,h5,h6)]:text-zinc-50 dark:[&_a]:text-zinc-50 dark:[&_p]:text-zinc-300 [&_h3]:text-lg [&_h2]:text-xl [&_h1]:text-2xl [&_a]:underline [&_a]:underline-offset-2">
+            <Fragment set:html={singlePost.body} />
+        </div>
+    </article>
+</Layout>

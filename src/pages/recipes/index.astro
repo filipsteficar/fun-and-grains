@@ -3,9 +3,73 @@
 import Layout from "../../layouts/Layout.astro";
 // Components
 import PageTitle from "../../components/PageTitle.astro";
+import RecipeCard from "../../components/RecipeCard.astro";
 // Data Imports
 import { siteData } from "../../global";
+// Directus Imports
+import directus from "../../lib/directus";
+import { readItems } from "@directus/sdk";
+// Query Posts from Directus
+const posts = await directus.request(
+    readItems("recipes", {
+        fields: [
+            "id",
+            "title",
+            "slug",
+            "cover",
+            "cover_alt_text",
+            "prep_time",
+            "difficulty",
+            "body",
+            "date_created",
+            "status",
+            {
+                author: ["id", "name", "slug"]
+            }
+        ],
+        filter: {
+            status: {
+                _eq: "published"
+        }
+    },
+    sort: ["-date_created"],
+    limit: -1,
+    })
+);
+// Directus URL
+const CMS = "https://directus-v0gswo0csw84sck0cc8c4oo0.apollo.filipsteficar.com";
+
+// Prep Time Helper Function
+function formatTime(minutes: number): string {
+    if (minutes < 60) {
+        return `${minutes}m`;
+    }
+    
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    
+    if (remainingMinutes === 0) {
+        return `${hours}h`;
+    }
+    
+    return `${hours}h ${remainingMinutes.toString().padStart(2, '0')}m`;
+}
 ---
 <Layout pageTitle=`Recipes - ${siteData.name}`>
     <PageTitle pageTitle="Recipes" />
+    <section class="@container">
+        <div class="gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto mt-4 px-4 container">
+            {posts.map((singleRecipe) => (
+                <RecipeCard
+                imgSRC={`${CMS}/assets/${singleRecipe.cover}?width=1200&quality=80&format=webp`}
+                difficulty={singleRecipe.difficulty}
+                prepTime={formatTime(singleRecipe.prep_time)}
+                title={singleRecipe.title}
+                author={singleRecipe.author?.name || "Unknown Author"}
+                date={new Date(singleRecipe.date_created).toLocaleDateString('en-GB')}
+                href={`/recipes/${singleRecipe.slug}`}
+                />
+            ))}
+        </div>
+    </section>
 </Layout>
