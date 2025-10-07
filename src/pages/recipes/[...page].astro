@@ -17,6 +17,9 @@ interface Recipe {
     title: string;
     slug: string;
     cover: string;
+    cover_alt_text: string;
+    prep_time: number;
+    difficulty: string;
     date_created: string;
     status: string;
     author?: {
@@ -37,7 +40,6 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
                 "cover_alt_text",
                 "prep_time",
                 "difficulty",
-                "body",
                 "date_created",
                 "status",
                 {
@@ -82,7 +84,7 @@ function formatTime(minutes: number): string {
     <PageTitle pageTitle="Recipes" />
     <section class="@container">
         <div class="gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto mt-4 px-4 container">
-            {page.data.map((singleRecipe: Post) => (
+            {page.data.map((singleRecipe: Recipe) => (
                 <RecipeCard
                 imgSRC={`${CMS}/assets/${singleRecipe.cover}?width=1200&quality=80&format=webp`}
                 difficulty={singleRecipe.difficulty}
@@ -96,7 +98,7 @@ function formatTime(minutes: number): string {
         </div>
         <!-- Pagination Controls -->
         {page.lastPage > 1 && (
-            <div class="p-4">
+            <div class="mt-4 mb-4">
                 <nav class="flex flex-row justify-between items-center gap-4 mx-auto px-4 container">
                     {page.url.prev && (
                         <a href={page.url.prev} class="bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 px-4 py-2 rounded-xl transition-colors duration-500 ease-in-out">Previous</a>
