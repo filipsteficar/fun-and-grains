@@ -1,0 +1,14 @@
+---
+const { pageTitle, pageDescription, currentURL } = Astro.props;
+---
+<!-- Page Title -->
+<title>{pageTitle || "Fun&Grains"}</title>
+<!-- Meta Description -->
+<meta name="description" content={pageDescription || "Fun&Grains Is a Vegan Food Blog"} />
+<!-- Meta URL -->
+{currentURL && <link rel="canonical" href={currentURL} />}
+<!-- Open Graph -->
+<meta property="og:title" content={pageTitle || "Fun&Grains" } />
+<meta property="og:description" content={pageDescription || "Grains Is a Vegan Food Blog"} />
+{currentURL && <meta property="og:url" content={currentURL} />}
+<meta property="og:type" content="article" />
