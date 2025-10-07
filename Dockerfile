@@ -26,7 +26,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy Built Static Site From Build Stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose Port 3000 For Coolify
-EXPOSE 3000
+# Expose Port 80
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
