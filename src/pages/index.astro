@@ -5,6 +5,6 @@ import Layout from '../layouts/Layout.astro';
 // Data Imports
 import { siteData } from '../global';
 ---
-<Layout pageTitle=`Home - ${siteData.name}`>
+<Layout pageTitle={`Home - ${siteData.name}`} pageDescription="Fun&Grains Homepage. The Home of The Vegans!" currentURL={Astro.url}>
 	
 </Layout>
