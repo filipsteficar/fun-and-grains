@@ -47,7 +47,7 @@ const { singlePost } = Astro.props;
 // Enable or Disable Back Button (For Testing)
 const ENABLE_BACK_BUTTON = true;
 ---
-<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.title} currentURL={Astro.url} ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&quality=85&fit=cover&format=jpg`} articleAuthor={singlePost.author.name}>
+<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.title} currentURL={Astro.url} ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&quality=85&fit=cover`} articleAuthor={singlePost.author.name}>
     <article class="@container">
         <!-- Post Title -->
         <div class="mx-auto mt-4 px-4 lg:max-w-4xl container">
