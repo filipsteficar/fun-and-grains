@@ -5,10 +5,11 @@ import "../styles/global.css";
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Umami from "../components/Umami.astro";
+import SEO from "../components/SEO.astro";
 // Data Imports
 import { siteData } from '../global';
 // Props
-const { pageTitle } = Astro.props;
+const { pageTitle, pageDescription, currentURL, ogImage, articleAuthor } = Astro.props;
 // View Transitions
 import { ClientRouter } from "astro:transitions";
 ---
@@ -19,15 +20,26 @@ import { ClientRouter } from "astro:transitions";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
+		<!-- SEO -->
+		<SEO
+		pageTitle={pageTitle}
+		pageDescription={pageDescription}
+		currentURL={currentURL}
+		ogImage={ogImage}
+		articleAuthor={articleAuthor} />
 		<!-- Umami Analytics -->
 		<Umami />
 		<!-- View Transitions -->
 		<ClientRouter />
+		<script>
+			console.log("%cWe are ALWAYS watching 👀", "color:lightgreen; font-size:20px;");
+  		</script>
 	</head>
 	<body class="flex flex-col bg-zinc-50 dark:bg-zinc-950 min-h-screen font-body font-normal text-zinc-950 dark:text-zinc-50 text-base">
 		<Header />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

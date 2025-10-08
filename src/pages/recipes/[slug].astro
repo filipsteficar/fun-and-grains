@@ -3,6 +3,7 @@
 import Layout from "../../layouts/Layout.astro";
 // Components
 import { Image } from 'astro:assets';
+import BackToArchive from "../../components/BackToArchive.astro";
 // Data Imports
 import { siteData } from "../../global";
 // Directus
@@ -63,6 +64,9 @@ function formatTime(minutes: number): string {
     
     return `${hours}h ${remainingMinutes.toString().padStart(2, '0')}m`;
 }
+
+// Enable or Disable Back Button (For Testing)
+const ENABLE_BACK_BUTTON = true;
 ---
 <Layout pageTitle={`${singleRecipe.title} - ${siteData.name}`}>
     <article class="@container">
@@ -111,5 +115,12 @@ function formatTime(minutes: number): string {
                 <p class="text-zinc-700 dark:text-zinc-300">{singleRecipe.author.bio}</p>
             </div>
         </div>
+        <!-- Back To Archive -->
+        {ENABLE_BACK_BUTTON && (
+        <BackToArchive
+        href="/recipes"
+        buttonTitle="Back To Archive"
+        />
+        )}
     </article>
 </Layout>

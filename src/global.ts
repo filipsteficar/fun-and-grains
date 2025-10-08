@@ -3,6 +3,7 @@ const currentYear = new Date().getFullYear();
 export const siteData = {
     name: "Fun&Grains",
     lang: "en-GB",
+    ogLang: "en_GB",
     copyright: `Fun&Grains - ${currentYear} | All Rights Reserved`,
     ver: "0.0.1"
 }

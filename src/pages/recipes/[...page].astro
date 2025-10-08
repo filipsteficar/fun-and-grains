@@ -80,7 +80,7 @@ function formatTime(minutes: number): string {
     return `${hours}h ${remainingMinutes.toString().padStart(2, '0')}m`;
 }
 ---
-<Layout pageTitle=`Recipes - ${siteData.name}`>
+<Layout pageTitle={`Recipes - ${siteData.name}`} pageDescription="This is our blog archive. The best vegan blog archive on the internet!" currentURL={Astro.url}>
     <PageTitle pageTitle="Recipes" />
     <section class="@container">
         <div class="gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto mt-4 px-4 container">
