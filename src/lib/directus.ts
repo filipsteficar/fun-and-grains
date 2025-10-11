@@ -6,10 +6,13 @@ type Post = {
     slug: string;
     author: Author;
     cover: string;
+    cover_alt_text: string;
     body: string;
     date_updated: string;
     date_created: string;
     status: string;
+    // SEO
+    page_description: string;
 }
 
 type Recipe = {
@@ -34,6 +37,8 @@ type Recipe = {
     date_updated: string;
     date_created: string;
     status: string;
+    // SEO
+    page_description: string;
 }
 
 type Ingredient = {

@@ -18,8 +18,10 @@ export async function getStaticPaths() {
             fields: [
                 "id",
                 "title",
+                "page_description",
                 "slug",
                 "cover",
+                "cover_alt_text",
                 "date_created",
                 "status",
                 "body",
@@ -47,7 +49,7 @@ const { singlePost } = Astro.props;
 // Enable or Disable Back Button (For Testing)
 const ENABLE_BACK_BUTTON = true;
 ---
-<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.title} currentURL={new URL(Astro.url.pathname, Astro.site).href} ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&fit=cover&format=webp`} articleAuthor={singlePost.author.name}>
+<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.page_description} currentURL={new URL(Astro.url.pathname, Astro.site).href} ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&fit=cover&format=webp`} ogImageAlt={singlePost.cover_alt_text} articleAuthor={singlePost.author.name}>
     <article class="@container">
         <!-- Post Title -->
         <div class="mx-auto mt-4 px-4 lg:max-w-4xl container">
@@ -62,7 +64,7 @@ const ENABLE_BACK_BUTTON = true;
         <!-- Cover Image -->
         <div class="mx-auto mt-4 px-4 container">
             {singlePost.cover && (
-                <Image src={`${CMS}/assets/${singlePost.cover}?width=2400&quality=100&format=webp`} alt={singlePost.title} width="2400" height="800" class="rounded-lg object-cover aspect-[16/9]" loading="eager" />
+                <Image src={`${CMS}/assets/${singlePost.cover}?width=2400&quality=100&format=webp`} alt={singlePost.cover_alt_text} width="2400" height="800" class="rounded-lg object-cover aspect-[16/9]" loading="eager" />
             )}
         </div>
         <!-- Post Content -->

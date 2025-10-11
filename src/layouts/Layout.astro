@@ -9,7 +9,7 @@ import SEO from "../components/SEO.astro";
 // Data Imports
 import { siteData } from '../global';
 // Props
-const { pageTitle, pageDescription, currentURL, ogImage, articleAuthor } = Astro.props;
+const { pageTitle, pageDescription, currentURL, ogImage, ogImageAlt, articleAuthor } = Astro.props;
 // View Transitions
 import { ClientRouter } from "astro:transitions";
 ---
@@ -26,6 +26,7 @@ import { ClientRouter } from "astro:transitions";
 		pageDescription={pageDescription}
 		currentURL={currentURL}
 		ogImage={ogImage}
+		ogImageAlt={ogImageAlt}
 		articleAuthor={articleAuthor} />
 		<!-- Umami Analytics -->
 		<Umami />
