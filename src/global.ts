@@ -4,8 +4,10 @@ export const siteData = {
     name: "Fun&Grains",
     lang: "en-GB",
     ogLang: "en_GB",
+    langSchema: "en",
     copyright: `Fun&Grains - ${currentYear} | All Rights Reserved`,
-    ver: "0.0.1"
+    ver: "0.0.1",
+    url: "https://funandgrains.com"
 }
 // Define the MenuItem Interface
 interface MenuItem {
