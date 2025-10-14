@@ -1,0 +1,17 @@
+---
+// Components
+import { Image } from 'astro:assets';
+// Props
+const { imgSRC } = Astro.props;
+---
+<div class="gap-4 grid grid-cols-1 lg:grid-cols-2 mx-auto mt-4 px-4 container">
+    <div class="flex flex-col justify-center">
+        <h1 class="font-heading font-semibold text-2xl">Wholesome Vegan Food Made Simple & Fun</h1>
+        <p>Easy plant-based recipes and food stories for everyday life.</p>
+        <div class="flex flex-row flex-wrap gap-4 mt-4 font-heading font-semibold">
+            <a href="/recipes" class="bg-zinc-100 hover:bg-zinc-200 hover:dark:bg-zinc-800 dark:bg-zinc-900 px-4 py-2 rounded-lg text-zinc-700 hover:dark:text-zinc-50 hover:text-zinc-950 dark:text-zinc-300 transition-colors duration-500 ease-in-out">Browse Recipes</a>
+            <a href="/blog" class="bg-zinc-100 hover:bg-zinc-200 hover:dark:bg-zinc-800 dark:bg-zinc-900 px-4 py-2 rounded-lg text-zinc-700 hover:dark:text-zinc-50 hover:text-zinc-950 dark:text-zinc-300 transition-colors duration-500 ease-in-out">Read The Blog</a>
+        </div>
+    </div>
+    <Image src={imgSRC} alt="Field of Crops" width="1200" height="800" class="rounded-lg object-cover aspect-[16/9]" loading="eager" />
+</div>

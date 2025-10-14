@@ -21,15 +21,15 @@ const jsonLdSchema = currentURL && pageTitle ? {
         "@type": "Organization",
         "@id": siteData.url,
         "name": siteData.name
-  },
-  "mainEntityOfPage": {
+    },
+    "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": currentURL
-  },
-  ...(datePublished && { "datePublished": datePublished }),
-  ...(dateModified && { "dateModified": dateModified }),
-  "inLanguage": siteData.langSchema,
-  "isAccessibleForFree": true
+    },
+    ...(datePublished && { "datePublished": datePublished }),
+    ...(dateModified && { "dateModified": dateModified }),
+    "inLanguage": siteData.langSchema,
+    "isAccessibleForFree": true
 } : null;
 ---
 <!-- Meta Data -->
