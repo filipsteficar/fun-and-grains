@@ -9,6 +9,7 @@ import { siteData } from "../../global";
 // Directus
 import directus from "../../lib/directus";
 import { readItems } from "@directus/sdk";
+import BlogSchema from "../../components/BlogSchema.astro";
 // Directus URL
 const CMS = "https://directus-v0gswo0csw84sck0cc8c4oo0.apollo.filipsteficar.com";
 // Directus Export Posts
@@ -24,7 +25,6 @@ export async function getStaticPaths() {
                 "slug",
                 "cover",
                 "cover_alt_text",
-                "date_created",
                 "status",
                 "body",
                 {
@@ -51,7 +51,17 @@ const { singlePost } = Astro.props;
 // Enable or Disable Back Button (For Testing)
 const ENABLE_BACK_BUTTON = true;
 ---
-<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.page_description} currentURL={new URL(Astro.url.pathname, Astro.site).href} ogType="article" ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&fit=cover&format=webp`} ogImageAlt={singlePost.cover_alt_text} articleAuthor={singlePost.author.name} datePublished={singlePost.date_created} dateModified={singlePost.date_updated}>
+<Layout pageTitle={`${singlePost.title} - ${siteData.name}`} pageDescription={singlePost.page_description} currentURL={new URL(Astro.url.pathname, Astro.site).href} ogType="article" ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&fit=cover&format=webp`} ogImageAlt={singlePost.cover_alt_text} articleAuthor={singlePost.author.name}>
+    <Fragment slot="head">
+        <BlogSchema
+        pageTitle={`${singlePost.title} - ${siteData.name}`}
+        pageDescription={singlePost.page_description}
+        currentURL={new URL(Astro.url.pathname, Astro.site).href}
+        datePublished={singlePost.date_created}
+        dateModified={singlePost.date_updated}
+        ogImage={`${CMS}/assets/${singlePost.cover}?width=1200&height=630&fit=cover&format=webp`}
+        articleAuthor={singlePost.author.name} />
+    </Fragment>
     <article class="@container">
         <!-- Post Title -->
         <div class="mx-auto mt-4 px-4 lg:max-w-4xl container">

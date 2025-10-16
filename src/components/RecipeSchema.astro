@@ -1,0 +1,58 @@
+---
+// Props
+const {
+    pageTitle, 
+    pageDescription, 
+    datePublished, 
+    dateModified, 
+    currentURL, 
+    ogImage, 
+    articleAuthor,
+    totalTime,
+    recipeYield,
+    recipeIngredients,
+    recipeInstructions,
+    recipeCategory,
+    recipeCuisine
+} = Astro.props;
+// Data Imports
+import { siteData } from '../global';
+// Build JSON-LD Schema Only if Required Data Exists
+const jsonLdSchema = currentURL && pageTitle && recipeIngredients && recipeInstructions ? {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "@id": currentURL,
+    "name": pageTitle,
+    "description": pageDescription || "A Delicious Vegan Recipe",
+    ...(ogImage && { "image": ogImage }),
+    ...(articleAuthor && {
+        "author": {
+            "@type": "Person",
+            "name": articleAuthor
+      }
+    }),
+    "publisher": {
+        "@type": "Organization",
+        "@id": siteData.url,
+        "name": siteData.name
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": currentURL
+    },
+    ...(totalTime && { "totalTime": totalTime }),
+    ...(recipeYield && { "recipeYield": recipeYield }),
+    ...(recipeCategory && { "recipeCategory": recipeCategory }),
+    ...(recipeCuisine && { "recipeCuisine": recipeCuisine }),
+    "recipeIngredient": recipeIngredients,
+    "recipeInstructions": recipeInstructions,
+    ...(datePublished && { "datePublished": datePublished }),
+    ...(dateModified && { "dateModified": dateModified }),
+    "inLanguage": siteData.langSchema,
+    "isAccessibleForFree": true
+} : null;
+---
+<!-- Schema -->
+{jsonLdSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdSchema)} />
+)}

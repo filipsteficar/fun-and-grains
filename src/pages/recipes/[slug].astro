@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 // Components
 import { Image } from 'astro:assets';
 import BackToArchive from "../../components/BackToArchive.astro";
+import RecipeSchema from "../../components/RecipeSchema.astro";
 // Data Imports
 import { siteData } from "../../global";
 // Directus
@@ -17,6 +18,8 @@ export async function getStaticPaths() {
         readItems("recipes", {
             fields: [
                 "id",
+                "date_created",
+                "date_updated",
                 "title",
                 "page_description",
                 "slug",
@@ -26,7 +29,6 @@ export async function getStaticPaths() {
                 "difficulty",
                 "portions",
                 "body",
-                "date_created",
                 "status",
                 {
                     author: ["id", "name", "avatar", "slug", "bio"]
@@ -70,6 +72,16 @@ function formatTime(minutes: number): string {
 const ENABLE_BACK_BUTTON = true;
 ---
 <Layout pageTitle={`${singleRecipe.title} - ${siteData.name}`} pageDescription={singleRecipe.page_description} currentURL={new URL(Astro.url.pathname, Astro.site).href} ogType="article" ogImage={`${CMS}/assets/${singleRecipe.cover}?width=1200&height=630&fit=cover&format=webp`} ogImageAlt={singleRecipe.cover_alt_text} articleAuthor={singleRecipe.author.name}>
+    <Fragment slot="head">
+        <RecipeSchema
+        pageTitle={`${singleRecipe.title} - ${siteData.name}`}
+        pageDescription={singleRecipe.page_description}
+        currentURL={new URL(Astro.url.pathname, Astro.site).href}
+        datePublished={singleRecipe.date_created}
+        dateModified={singleRecipe.date_updated}
+        ogImage={`${CMS}/assets/${singleRecipe.cover}?width=1200&height=630&fit=cover&format=webp`}
+        articleAuthor={singleRecipe.author.name} />
+    </Fragment>
     <article class="@container">
         <!-- Post Title -->
         <div class="mx-auto mt-4 px-4 lg:max-w-4xl container">

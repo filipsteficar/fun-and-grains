@@ -8,8 +8,8 @@ type Post = {
     cover: string;
     cover_alt_text: string;
     body: string;
-    date_updated: string;
     date_created: string;
+    date_updated: string;
     status: string;
     // SEO
     page_description: string;
@@ -34,8 +34,8 @@ type Recipe = {
     body: string;
     // Relational Tags
     tags: Recipe_Tags[];
-    date_updated: string;
     date_created: string;
+    date_updated: string;
     status: string;
     // SEO
     page_description: string;
