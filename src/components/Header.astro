@@ -1,0 +1,15 @@
+---
+import { siteData, mainMenu } from "@utils/globals";
+---
+
+<header>
+    <nav>
+        <ul>
+            {mainMenu?.map((item) => (
+                <li>
+                    <a href={item.href || "/"}>{item.label || "Unknown"}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+</header>
